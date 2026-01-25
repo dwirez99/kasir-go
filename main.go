@@ -34,7 +34,7 @@ var (
 		{ID: 1, Name: "Alat Tulis", Description: "Kategori untuk alat tulis seperti pensil, pulpen, dll"},
 		{ID: 2, Name: "Kertas & Buku", Description: "Kategori untuk produk kertas dan buku"},
 	}
-	categoriesMu sync.Mutex
+	categoriesMu   sync.Mutex
 	nextCategoryID = 3
 )
 
@@ -93,7 +93,7 @@ func main() {
 	})
 
 	// 4. Categories endpoints - GET all and POST
-	http.HandleFunc("/categories", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/api/categories", func(w http.ResponseWriter, r *http.Request) {
 		w.Header().Set("Content-Type", "application/json")
 
 		switch r.Method {
@@ -126,7 +126,7 @@ func main() {
 	})
 
 	// 5. Categories by ID endpoints - GET, PUT, DELETE
-	http.HandleFunc("/categories/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/api/categories/", func(w http.ResponseWriter, r *http.Request) {
 		switch r.Method {
 		case "GET":
 			getCategoryByID(w, r)
@@ -225,7 +225,7 @@ func deleteProduk(w http.ResponseWriter, r *http.Request) {
 // --- Category Helper Functions ---
 
 func getCategoryByID(w http.ResponseWriter, r *http.Request) {
-	idStr := strings.TrimPrefix(r.URL.Path, "/categories/")
+	idStr := strings.TrimPrefix(r.URL.Path, "/api/categories/")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Invalid category ID", http.StatusBadRequest)
@@ -246,7 +246,7 @@ func getCategoryByID(w http.ResponseWriter, r *http.Request) {
 }
 
 func updateCategory(w http.ResponseWriter, r *http.Request) {
-	idStr := strings.TrimPrefix(r.URL.Path, "/categories/")
+	idStr := strings.TrimPrefix(r.URL.Path, "/api/categories/")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Invalid category ID", http.StatusBadRequest)
@@ -285,7 +285,7 @@ func updateCategory(w http.ResponseWriter, r *http.Request) {
 }
 
 func deleteCategory(w http.ResponseWriter, r *http.Request) {
-	idStr := strings.TrimPrefix(r.URL.Path, "/categories/")
+	idStr := strings.TrimPrefix(r.URL.Path, "/api/categories/")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Invalid category ID", http.StatusBadRequest)
