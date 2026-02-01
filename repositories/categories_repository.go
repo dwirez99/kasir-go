@@ -15,7 +15,7 @@ func NewCategoryRepository(db *sql.DB) *CategoryRepository {
 }
 
 func (repo *CategoryRepository) GetAll() ([]models.Category, error) {
-	query := "SELECT id, name, description FROM category"
+	query := `SELECT id, name, description FROM "Category"`
 	rows, err := repo.db.Query(query)
 	if err != nil {
 		return nil, err
@@ -35,13 +35,13 @@ func (repo *CategoryRepository) GetAll() ([]models.Category, error) {
 	return categories, nil
 }
 func (repo *CategoryRepository) Create(category *models.Category) error {
-	query := "INSERT INTO category (name, description) VALUES ($1, $2) RETURNING id"
+	query := `INSERT INTO "Category" (name, description) VALUES ($1, $2) RETURNING id`
 	err := repo.db.QueryRow(query,category.Name, category.Description).Scan(&category.ID)
 	return err
 }
 
 func (repo *CategoryRepository) GetByID(id int) (*models.Category, error) {
-	query := "SELECT id, name, description FROM category WHERE id = $1"
+	query := `SELECT id, name, description FROM "Category" WHERE id = $1`
 
 	var c models.Category
 	err := repo.db.QueryRow(query, id).Scan(&c.ID, &c.Name, &c.Description)
@@ -56,7 +56,7 @@ func (repo *CategoryRepository) GetByID(id int) (*models.Category, error) {
 }
 
 func (repo *CategoryRepository) Update(category *models.Category) error {
-	query := "UPDATE category SET name = $1, description = $2 WHERE id = $3"
+	query := `UPDATE "Category" SET name = $1, description = $2 WHERE id = $3`
 	result, err := repo.db.Exec(query, category.Name, category.Description, category.ID)
 	if err != nil {
 		return err
@@ -74,7 +74,7 @@ func (repo *CategoryRepository) Update(category *models.Category) error {
 }
 
 func (repo *CategoryRepository) Delete(id int) error {
-	query := "DELETE FROM category WHERE id = $1"
+	query := `DELETE FROM "Category" WHERE id = $1`
 	result, err := repo.db.Exec(query, id)
 	if err != nil {
 		return err
