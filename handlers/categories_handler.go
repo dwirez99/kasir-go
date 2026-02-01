@@ -17,7 +17,7 @@ func NewCategoriesHandler(service *services.CategoriesService) *CategoriesHandle
 	return &CategoriesHandler{service: service}
 }
 
-// HandleCategories - GET /api/kategori
+// HandleCategories - GET /api/category
 func (h *CategoriesHandler) HandleCategories(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
@@ -58,9 +58,9 @@ func (h *CategoriesHandler) Create(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(category)
 }
-// HandleCategory - GET /api/kategori/{id}
+// HandleCategory - GET /api/category/{id}
 func (h *CategoriesHandler) HandleCategory(w http.ResponseWriter, r *http.Request) {
-	idStr := strings.TrimPrefix(r.URL.Path, "/api/kategori/")
+	idStr := strings.TrimPrefix(r.URL.Path, "/api/category/")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
 		http.Error(w, "Invalid category ID", http.StatusBadRequest)

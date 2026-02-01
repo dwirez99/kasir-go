@@ -31,12 +31,12 @@ func (repo *CategoryRepository) GetAll() ([]models.Category, error) {
 		}
 		categories = append(categories, c)
 	}
-	
+
 	return categories, nil
 }
 func (repo *CategoryRepository) Create(category *models.Category) error {
 	query := `INSERT INTO "Category" (name, description) VALUES ($1, $2) RETURNING id`
-	err := repo.db.QueryRow(query,category.Name, category.Description).Scan(&category.ID)
+	err := repo.db.QueryRow(query, category.Name, category.Description).Scan(&category.ID)
 	return err
 }
 
