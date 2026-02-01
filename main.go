@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"fmt"
 
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
@@ -49,6 +50,11 @@ func main() {
 	http.HandleFunc("/api/produk", productHandler.HandleProducts)
 	http.HandleFunc("/api/produk/", productHandler.HandleProductByID)
 
-	log.Printf("Server running on port %s", Config.Port)
-	log.Fatal(http.ListenAndServe(":"+Config.Port, nil))
+	addr := "0.0.0.0:" + Config.Port
+	fmt.Println("Server running di", addr)
+
+	err = http.ListenAndServe(addr, nil)
+	if err != nil {
+		fmt.Println("gagal running server", err)
+	}
 }

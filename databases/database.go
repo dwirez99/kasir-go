@@ -3,6 +3,8 @@ package databases
 import (
 	"database/sql"
 	"log"
+
+	_ "github.com/lib/pq"
 )
 
 func InitDB(ConnectionString string) (*sql.DB, error) {
