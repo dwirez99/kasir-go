@@ -13,12 +13,12 @@ type CategoriesHandler struct {
 	service *services.CategoriesService
 }
 
-func NewCategoriesHandler(service *services.CategoriesService) *CategoriesHandler {
+func NewCategoryHandler(service *services.CategoriesService) *CategoriesHandler {
 	return &CategoriesHandler{service: service}
 }
 
 // HandleCategories - GET /api/category
-func (h *CategoriesHandler) HandleCategories(w http.ResponseWriter, r *http.Request) {
+func (h *CategoriesHandler) HandleCategory(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		h.GetAll(w, r)
@@ -58,8 +58,9 @@ func (h *CategoriesHandler) Create(w http.ResponseWriter, r *http.Request) {
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(category)
 }
+
 // HandleCategory - GET /api/category/{id}
-func (h *CategoriesHandler) HandleCategory(w http.ResponseWriter, r *http.Request) {
+func (h *CategoriesHandler) HandleCategoryByID(w http.ResponseWriter, r *http.Request) {
 	idStr := strings.TrimPrefix(r.URL.Path, "/api/category/")
 	id, err := strconv.Atoi(idStr)
 	if err != nil {
