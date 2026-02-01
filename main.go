@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"kasir-api/databases"
 	"kasir-api/handlers"
 	"kasir-api/repositories"
@@ -9,7 +10,6 @@ import (
 	"net/http"
 	"os"
 	"strings"
-	"fmt"
 
 	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
@@ -47,7 +47,7 @@ func main() {
 	productService := services.NewProductService(productRepo)
 	productHandler := handlers.NewProductHandler(productService)
 
-	http.HandleFunc("/api/product", productHandler.HandleProducts)
+	http.HandleFunc("/api/product", productHandler.HandleProduct)
 	http.HandleFunc("/api/product/", productHandler.HandleProductByID)
 
 	addr := "0.0.0.0:" + Config.Port
