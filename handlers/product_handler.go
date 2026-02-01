@@ -17,8 +17,8 @@ func NewProductHandler(service *services.ProductService) *ProductHandler {
 	return &ProductHandler{service: service}
 }
 
-// HandleProducts - GET /api/produk
-func (h *ProductHandler) HandleProducts(w http.ResponseWriter, r *http.Request) {
+// HandleProduct - GET /api/produk
+func (h *ProductHandler) HandleProduct(w http.ResponseWriter, r *http.Request) {
 	switch r.Method {
 	case http.MethodGet:
 		h.GetAll(w, r)
@@ -30,14 +30,14 @@ func (h *ProductHandler) HandleProducts(w http.ResponseWriter, r *http.Request) 
 }
 
 func (h *ProductHandler) GetAll(w http.ResponseWriter, r *http.Request) {
-	products, err := h.service.GetAll()
+	product, err := h.service.GetAll()
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	w.Header().Set("Content-Type", "application/json")
-	json.NewEncoder(w).Encode(products)
+	json.NewEncoder(w).Encode(product)
 }
 
 func (h *ProductHandler) Create(w http.ResponseWriter, r *http.Request) {
