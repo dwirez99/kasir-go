@@ -2,7 +2,10 @@ module kasir-api
 
 go 1.25.5
 
-require github.com/spf13/viper v1.21.0
+require (
+	github.com/lib/pq v1.11.1
+	github.com/spf13/viper v1.21.0
+)
 
 require (
 	github.com/fsnotify/fsnotify v1.9.0 // indirect
