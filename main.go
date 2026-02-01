@@ -10,28 +10,28 @@ import (
 	"os"
 	"strings"
 
+	_ "github.com/lib/pq"
 	"github.com/spf13/viper"
 )
 
 type Config struct {
-	Port string `mapstructure:"PORT"`
+	Port   string `mapstructure:"PORT"`
 	DBConn string `mapstructure:"DB_CONN"`
-	}
-
+}
 
 func main() {
 	viper.AutomaticEnv()
-	viper.SetEnvKeyReplacer(strings.NewReplacer(".","_"))
+	viper.SetEnvKeyReplacer(strings.NewReplacer(".", "_"))
 
 	if _, err := os.Stat(".env"); err == nil {
 		viper.SetConfigFile(".env")
-		if err := viper.ReadInConfig(); err !=nil {
+		if err := viper.ReadInConfig(); err != nil {
 			log.Fatal("Error reading .env file:", err)
 		}
 	}
 
 	Config := Config{
-		Port: viper.GetString("PORT"),
+		Port:   viper.GetString("PORT"),
 		DBConn: viper.GetString("DB_CONN"),
 	}
 
